@@ -10,6 +10,7 @@ import { createServer } from "http";
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { Command } from "commander";
+import { IncomingMessage } from "http";
 
 const DEFAULT_MINIMUM_TOKENS = 10000;
 
@@ -46,8 +47,21 @@ const CLI_PORT = (() => {
 // Store SSE transports by session ID
 const sseTransports: Record<string, SSEServerTransport> = {};
 
+function getClientIp(req: IncomingMessage): string | undefined {
+  // Check for X-Forwarded-For header (set by AWS ELB and other load balancers)
+  const forwardedFor = req.headers["x-forwarded-for"];
+  if (forwardedFor) {
+    // X-Forwarded-For can contain multiple IPs, take the first one
+    const ips = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor;
+    return ips.split(",")[0].trim();
+  }
+
+  // Fall back to socket remote address
+  return req.socket?.remoteAddress || undefined;
+}
+
 // Function to create a new server instance with all tools registered
-function createServerInstance() {
+function createServerInstance(clientIp?: string) {
   const server = new McpServer(
     {
       name: "Context7",
@@ -87,7 +101,7 @@ For ambiguous queries, request clarification before proceeding with a best-guess
         .describe("Library name to search for and retrieve a Context7-compatible library ID."),
     },
     async ({ libraryName }) => {
-      const searchResponse: SearchResponse = await searchLibraries(libraryName);
+      const searchResponse: SearchResponse = await searchLibraries(libraryName, clientIp);
 
       if (!searchResponse.results || searchResponse.results.length === 0) {
         return {
@@ -151,10 +165,14 @@ ${resultsText}`,
         ),
     },
     async ({ context7CompatibleLibraryID, tokens = DEFAULT_MINIMUM_TOKENS, topic = "" }) => {
-      const fetchDocsResponse = await fetchLibraryDocumentation(context7CompatibleLibraryID, {
-        tokens,
-        topic,
-      });
+      const fetchDocsResponse = await fetchLibraryDocumentation(
+        context7CompatibleLibraryID,
+        {
+          tokens,
+          topic,
+        },
+        clientIp
+      );
 
       if (!fetchDocsResponse) {
         return {
@@ -195,7 +213,11 @@ async function main() {
       // Set CORS headers for all responses
       res.setHeader("Access-Control-Allow-Origin", "*");
       res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,DELETE");
-      res.setHeader("Access-Control-Allow-Headers", "Content-Type, MCP-Session-Id, mcp-session-id");
+      res.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, MCP-Session-Id, mcp-session-id, MCP-Protocol-Version"
+      );
+      res.setHeader("Access-Control-Expose-Headers", "MCP-Session-Id");
 
       // Handle preflight OPTIONS requests
       if (req.method === "OPTIONS") {
@@ -205,8 +227,11 @@ async function main() {
       }
 
       try {
+        // Extract client IP address using socket remote address (most reliable)
+        const clientIp = getClientIp(req);
+
         // Create new server instance for each request
-        const requestServer = createServerInstance();
+        const requestServer = createServerInstance(clientIp);
 
         if (url === "/mcp") {
           const transport = new StreamableHTTPServerTransport({

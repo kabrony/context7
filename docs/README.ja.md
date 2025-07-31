@@ -36,7 +36,7 @@ Context7 は最新のコード例とドキュメントを直接 LLM のコンテ
 
 ## 📚 プロジェクトの追加
 
-[プロジェクト追加ガイド](./docs/adding-projects.md) をチェックして、お気に入りのライブラリを Context7 に追加（または更新）する方法を学びましょう。
+[プロジェクト追加ガイド](./adding-projects.md) をチェックして、お気に入りのライブラリを Context7 に追加（または更新）する方法を学びましょう。
 
 ## 🛠️ インストール
 
@@ -317,6 +317,30 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp
 ```
 
 保存後、チャットで `get-library-docs` の後に Context7 ドキュメント ID を入力します（例：`get-library-docs /nuxt/ui`）。詳細情報は [BoltAI ドキュメンテーションサイト](https://docs.boltai.com/docs/plugins/mcp-servers) で利用可能です。iOS 版 BoltAI については、[このガイドを参照してください](https://docs.boltai.com/docs/boltai-mobile/mcp-servers)。
+
+</details>
+
+<details>
+<summary><b>Copilot Coding Agent へのインストール</b></summary>
+
+以下の設定を Copilot Coding Agent の `mcp` セクション（Repository->Settings->Copilot->Coding agent->MCP configuration）に追加してください：
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "tools": [
+        "get-library-docs",
+        "resolve-library-id"
+      ]
+    }
+  }
+}
+```
+
+詳細は [公式 GitHub ドキュメント](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp) をご覧ください。
 
 </details>
 

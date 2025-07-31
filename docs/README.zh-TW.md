@@ -34,7 +34,7 @@ Context7 會將即時的程式碼範例與文件直接帶入你的 LLM 上下文
 
 ## 📚 新增專案
 
-請參考我們的[專案新增指南](./docs/adding-projects.md)，學習如何將你喜愛的函式庫加入 Context7 或更新其內容。
+請參考我們的[專案新增指南](./adding-projects.md)，學習如何將你喜愛的函式庫加入 Context7 或更新其內容。
 
 ## 🛠️ 安裝
 
@@ -77,6 +77,8 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 
 #### Cursor 本地伺服器連線
 
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IC15IEB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
+
 ```json
 {
   "mcpServers": {
@@ -90,6 +92,8 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 
 <details>
 <summary>替代方案：使用 Bun</summary>
+
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiYnVueCAteSBAdXBzdGFzaC9jb250ZXh0Ny1tY3AifQ%3D%3D)
 
 ```json
 {
@@ -106,6 +110,8 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 
 <details>
 <summary>替代方案：使用 Deno</summary>
+
+[![Install MCP Server](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/install-mcp?name=context7&config=eyJjb21tYW5kIjoiZGVubyBydW4gLS1hbGxvdy1lbnYgLS1hbGxvdy1uZXQgbnBtOkB1cHN0YXNoL2NvbnRleHQ3LW1jcCJ9)
 
 ```json
 {
@@ -155,6 +161,42 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 </details>
 
 <details>
+<summary><b>在 Trae 安裝</b></summary>
+
+請使用「手動新增」功能，並填寫該 MCP 伺服器的 JSON 設定資訊。
+欲了解更多詳情，請參閱 [Trae 文件](https://docs.trae.ai/ide/model-context-protocol?_lang=zh-tw)。
+
+#### Trae 遠端伺服器連線
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}
+```
+
+#### Trae 本地伺服器連線
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
 <summary><b>在 VS Code 安裝</b></summary>
 
 [<img alt="在 VS Code 中安裝 (npx)" src="https://img.shields.io/badge/VS_Code-VS_Code?style=flat-square&label=安裝Context7%20MCP&color=0098FF">](https://insiders.vscode.dev/redirect?url=vscode%3Amcp%2Finstall%3F%7B%22name%22%3A%22context7%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22%40upstash%2Fcontext7-mcp%40latest%22%5D%7D)
@@ -192,6 +234,45 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 </details>
 
 <details>
+<summary><b>在 Visual Studio 2022 安裝</b></summary>
+
+您可以按照 [Visual Studio MCP 伺服器文件](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022) 的說明，在 Visual Studio 2022 中設定 Context7 MCP。
+
+請將以下內容新增至您的 Visual Studio MCP 設定檔（詳細資訊請參閱 [Visual Studio 文件](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022)）：
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "context7": {
+        "type": "http",
+        "url": "https://mcp.context7.com/mcp"
+      }
+    }
+  }
+}
+```
+
+或者，若要使用本地伺服器：
+
+```json
+{
+  "mcp": {
+    "servers": {
+      "context7": {
+        "type": "stdio",
+        "command": "npx",
+        "args": ["-y", "@upstash/context7-mcp"]
+      }
+    }
+  }
+}
+```
+
+如需更多資訊與疑難排解，請參閱 [Visual Studio MCP 伺服器文件](https://learn.microsoft.com/visualstudio/ide/mcp-servers?view=vs-2022)。
+</details>
+
+<details>
 <summary><b>在 Zed 安裝</b></summary>
 
 可透過 [Zed 擴充套件](https://zed.dev/extensions?query=Context7) 安裝，或將下列內容加入 Zed `settings.json`。詳見 [Zed Context Server 文件](https://zed.dev/docs/assistant/context-servers)。
@@ -213,11 +294,52 @@ npx -y @smithery/cli@latest install @upstash/context7-mcp --client <CLIENT_NAME>
 </details>
 
 <details>
+<summary><b>在 Gemini CLI 安裝</b></summary>
+
+詳閱 [Gemini CLI 設定說明](https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/configuration.md)。
+
+1.  開啟 Gemini CLI 設定檔，位置為 `~/.gemini/settings.json`（其中 `~` 代表您的家目錄）。
+2.  在您的 `settings.json` 檔案中的 `mcpServers` 物件內新增以下內容：
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "httpUrl": "https://mcp.context7.com/mcp"
+    }
+  }
+}
+```
+
+或者，若要使用本地伺服器：
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  }
+}
+```
+
+如果 `mcpServers` 物件不存在，請建立它。
+
+</details>
+
+<details>
 <summary><b>在 Claude Code 安裝</b></summary>
 
 執行下列指令。詳見 [Claude Code MCP 文件](https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/tutorials#set-up-model-context-protocol-mcp)。
 
 #### Claude Code 遠端伺服器連線
+
+```sh
+claude mcp add --transport http context7 https://mcp.context7.com/mcp
+```
+
+或者使用 SSE 傳輸方式：
 
 ```sh
 claude mcp add --transport sse context7 https://mcp.context7.com/sse
@@ -250,6 +372,20 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp
 </details>
 
 <details>
+<summary>
+<b>在 Cline 安裝</b>
+</summary>
+
+您可以按照以下說明，透過 [Cline MCP 伺服器市集](https://cline.bot/mcp-marketplace) 輕鬆安裝 Context7：
+
+1. 開啟 **Cline**。
+2. 點擊漢堡選單圖示（☰）進入 **MCP 伺服器** 區段。
+3. 在 **市集** 分頁的搜尋欄中尋找 *Context7*。
+4. 點擊 **安裝** 按鈕。
+
+</details>
+
+<details>
 <summary><b>在 BoltAI 安裝</b></summary>
 
 打開應用程式的「Settings」頁面，前往「Plugins」，並輸入下列 JSON：
@@ -266,6 +402,32 @@ claude mcp add context7 -- npx -y @upstash/context7-mcp
 ```
 
 儲存後，在聊天中輸入 `get-library-docs` 並接上你的 Context7 文件 ID（例如 `get-library-docs /nuxt/ui`）。更多資訊請參考 [BoltAI 文件網站](https://docs.boltai.com/docs/plugins/mcp-servers)。如在 iOS 上使用 BoltAI，請參考[此指南](https://docs.boltai.com/docs/boltai-mobile/mcp-servers)。
+
+</details>
+
+<details>
+<summary><b>在 Copilot Coding Agent 安裝</b></summary>
+
+## 在 Copilot Coding Agent 使用 Context7
+
+請將以下設定加入 Copilot Coding Agent 的 `mcp` 設定區塊（Repository->Settings->Copilot->Coding agent->MCP configuration）：
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "type": "http",
+      "url": "https://mcp.context7.com/mcp",
+      "tools": [
+        "get-library-docs",
+        "resolve-library-id"
+      ]
+    }
+  }
+}
+```
+
+更多資訊請參見[官方 GitHub 文件](https://docs.github.com/en/enterprise-cloud@latest/copilot/how-tos/agents/copilot-coding-agent/extending-copilot-coding-agent-with-mcp)。
 
 </details>
 
@@ -375,6 +537,258 @@ Windows 的設定與 Linux 或 macOS 略有不同（*範例以 Cline 為例*）�
 
 </details>
 
+<details>
+<summary><b>在 Roo Code 安裝</b></summary>
+
+將以下內容加入你的 Roo Code MCP 設定檔。更多資訊請參考 [Roo Code MCP 文件](https://docs.roocode.com/features/mcp/using-mcp-in-roo)。
+
+#### Roo Code 遠端伺服器連線
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "type": "streamable-http",
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}
+```
+
+#### Roo Code 本地伺服器連線
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+<summary><b>在 Zencoder 安裝</b></summary>
+
+要在 Zencoder 設定 Context7 MCP，請依照下列步驟操作：
+
+1. 前往 Zencoder 選單（...）
+2. 從下拉選單選擇 Agent tools
+3. 點擊 Add custom MCP
+4. 輸入名稱與下方伺服器設定，並記得點擊 Install 按鈕
+
+```json
+{
+    "command": "npx",
+    "args": [
+        "-y",
+        "@upstash/context7-mcp@latest"
+    ]
+}
+```
+
+新增 MCP 伺服器後，即可繼續使用。
+
+</details>
+
+<details>
+<summary><b>在 Amazon Q Developer CLI 安裝</b></summary>
+
+將以下內容加入你的 Amazon Q Developer CLI 設定檔。更多細節請參考 [Amazon Q Developer CLI 文件](https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/command-line-mcp-configuration.html)。
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"]
+    }
+  }
+}
+```
+</details>
+
+<details>
+<summary><b>在 Qodo Gen 安裝</b></summary>
+
+詳情請參考 [Qodo Gen 文件](https://docs.qodo.ai/qodo-documentation/qodo-gen/qodo-gen-chat/agentic-mode/agentic-tools-mcps)。
+
+1. 在 VSCode 或 IntelliJ 開啟 Qodo Gen 聊天面板。
+2. 點擊 Connect more tools。
+3. 點擊 + Add new MCP。
+4. 加入以下設定：
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "url": "https://mcp.context7.com/mcp"
+    }
+  }
+}
+```
+</details>
+
+<details>
+<summary><b>在 JetBrains AI Assistant 安裝</b></summary>
+
+詳情請參考 [JetBrains AI Assistant 文件](https://www.jetbrains.com/help/ai-assistant/configure-an-mcp-server.html)。
+
+1. 在 JetBrains IDE 前往 `Settings` -> `Tools` -> `AI Assistant` -> `Model Context Protocol (MCP)`
+2. 點擊 `+ Add`
+3. 在對話框左上角點擊 `Command` 並選擇 As JSON
+4. 輸入以下設定並點擊 `OK`
+
+```json
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  }
+}
+```
+
+5. 點擊 `Apply` 儲存變更。
+6. 同樣方式也可在 JetBrains Junie 的 `Settings` -> `Tools` -> `Junie` -> `MCP Settings` 新增 context7。
+
+</details>
+
+<details>
+<summary><b>在 Warp 安裝</b></summary>
+
+詳情請參考 [Warp Model Context Protocol 文件](https://docs.warp.dev/knowledge-and-collaboration/mcp#adding-an-mcp-server)。
+
+1. 前往 `Settings` > `AI` > `Manage MCP servers`
+2. 點擊 `+ Add` 新增 MCP 伺服器
+3. 貼上以下設定：
+
+```json
+{
+  "Context7": {
+    "command": "npx",
+    "args": [
+      "-y",
+      "@upstash/context7-mcp"
+    ],
+    "env": {},
+    "working_directory": null,
+    "start_on_launch": true
+  }
+}
+```
+
+4. 點擊 `Save` 套用變更。
+
+</details>
+
+<details>
+<summary><b>在 Opencode 安裝</b></summary>
+
+將以下內容加入你的 Opencode 設定檔。更多資訊請參考 [Opencode MCP 文件](https://opencode.ai/docs/mcp-servers)。
+
+#### Opencode 遠端伺服器連線
+
+```json
+"mcp": {
+  "context7": {
+    "type": "remote",
+    "url": "https://mcp.context7.com/mcp",
+    "enabled": true
+  }
+}
+```
+
+#### Opencode 本地伺服器連線
+
+```json
+{
+  "mcp": {
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@upstash/context7-mcp"],
+      "enabled": true
+    }
+  }
+}
+```
+
+</details>
+
+<details>
+
+<summary><b>在 Kiro 安裝</b></summary>
+
+詳情請參考 [Kiro Model Context Protocol 文件](https://kiro.dev/docs/mcp/configuration/)。
+
+1. 前往 `Kiro` > `MCP Servers`
+2. 點擊 `+ Add` 按鈕新增 MCP 伺服器。
+3. 貼上以下設定：
+
+```json
+{
+  "mcpServers": {
+    "Context7": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "env": {},
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}
+```
+
+4. 點擊 `Save` 套用變更。
+
+</details>
+<details>
+<summary><b>在 OpenAI Codex 安裝</b></summary>
+
+詳情請參考 [OpenAI Codex](https://github.com/openai/codex)。
+
+將下列設定加入你的 OpenAI Codex MCP 伺服器設定：
+
+```toml
+[mcp_servers.context7]
+args = ["-y", "@upstash/context7-mcp"]
+command = "npx"
+```
+
+</details>
+<details>
+<summary><b>在 LM Studio 安裝</b></summary>
+
+詳情請參考 [LM Studio MCP 支援](https://lmstudio.ai/blog/lmstudio-v0.3.17)。
+
+#### 一鍵安裝：
+[![將 MCP Server context7 加入 LM Studio](https://files.lmstudio.ai/deeplink/mcp-install-light.svg)](https://lmstudio.ai/install-mcp?name=context7&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsIkB1cHN0YXNoL2NvbnRleHQ3LW1jcCJdfQ%3D%3D)
+
+#### 手動設定：
+
+1. 前往 `Program`（右側）> `Install` > `Edit mcp.json`
+2. 貼上以下設定：
+```json
+{
+  "mcpServers": {
+    "Context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"]
+    }
+  }
+}
+```
+3. 點擊 `Save` 套用變更。
+4. 可於右側 `Program` 下方或聊天框底部的插頭圖示切換 MCP 伺服器開關。
+
+</details>
 ## 🔧 環境變數
 
 Context7 MCP 伺服器支援下列環境變數：
